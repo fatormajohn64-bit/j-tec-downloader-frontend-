@@ -1,252 +1,305 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>J-TEC Downloader | Universal Media Saver</title>
-  <style>
-    :root {
-      --bg-color: #0f172a;
-      --card-bg: #1e293b;
-      --accent-color: #3b82f6;
-      --accent-hover: #2563eb;
-      --text-main: #f8fafc;
-      --text-muted: #94a3b8;
-      --error-color: #ef4444;
-    }
+    <meta charset="UTF-8">
 
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      background-color: var(--bg-color);
-      color: var(--text-main);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      padding: 1.5rem;
-    }
+    <meta
+        name="description"
+        content="J TEC Downloader - Download supported video and audio media."
+    >
 
-    .container {
-      background-color: var(--card-bg);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 16px;
-      padding: 2.5rem;
-      max-width: 520px;
-      width: 100%;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-      text-align: center;
-    }
+    <meta
+        name="theme-color"
+        content="#050505"
+    >
 
-    .brand {
-      font-size: 2rem;
-      font-weight: 800;
-      color: var(--accent-color);
-      letter-spacing: -0.5px;
-      margin-bottom: 0.5rem;
-    }
+    <title>J TEC Downloader</title>
 
-    .subtitle {
-      color: var(--text-muted);
-      font-size: 0.95rem;
-      margin-bottom: 2rem;
-    }
-
-    .input-group {
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-    }
-
-    input[type="url"] {
-      width: 100%;
-      padding: 14px 16px;
-      border-radius: 8px;
-      border: 1px solid #334155;
-      background-color: #0f172a;
-      color: var(--text-main);
-      font-size: 1rem;
-      outline: none;
-      transition: border-color 0.2s;
-    }
-
-    input[type="url"]:focus {
-      border-color: var(--accent-color);
-    }
-
-    button {
-      padding: 14px;
-      border: none;
-      border-radius: 8px;
-      background-color: var(--accent-color);
-      color: white;
-      font-weight: 600;
-      font-size: 1rem;
-      cursor: pointer;
-      transition: background-color 0.2s, opacity 0.2s;
-    }
-
-    button:hover { background-color: var(--accent-hover); }
-    button:disabled { opacity: 0.6; cursor: not-allowed; }
-
-    #previewCard {
-      display: none;
-      margin-top: 2rem;
-      padding: 1.25rem;
-      background: #0f172a;
-      border-radius: 10px;
-      text-align: left;
-    }
-
-    #previewCard img {
-      width: 100%;
-      border-radius: 8px;
-      margin-bottom: 1rem;
-      object-fit: cover;
-      max-height: 220px;
-    }
-
-    .meta-title {
-      font-weight: 600;
-      font-size: 1rem;
-      margin-bottom: 0.25rem;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    .meta-uploader {
-      color: var(--text-muted);
-      font-size: 0.85rem;
-      margin-bottom: 1rem;
-    }
-
-    .status-msg {
-      margin-top: 1.25rem;
-      font-size: 0.9rem;
-      color: var(--text-muted);
-    }
-
-    .error { color: var(--error-color); }
-  </style>
+    <link rel="stylesheet" href="./css/style.css">
 </head>
+
 <body>
 
-  <div class="container">
-    <div class="brand">J-TEC Downloader</div>
-    <div class="subtitle">Download video streams from YouTube, TikTok, Facebook & IG</div>
+    <!-- =====================================================
+         APP
+    ====================================================== -->
 
-    <div class="input-group">
-      <input type="url" id="videoUrl" placeholder="Paste video link here..." required>
-      <button id="fetchBtn" onclick="handleFetchInfo()">Fetch Video</button>
+    <div id="app">
+
+        <!-- HEADER -->
+
+        <header class="site-header">
+
+            <a
+                href="./"
+                class="brand"
+                aria-label="J TEC Downloader Home"
+            >
+                <span class="brand-main">J TEC</span>
+                <span class="brand-sub">DOWNLOADER</span>
+            </a>
+
+        </header>
+
+
+        <!-- =================================================
+             MAIN
+        ================================================== -->
+
+        <main class="main-content">
+
+            <!-- HERO -->
+
+            <section class="hero-section">
+
+                <div class="hero-badge">
+                    FAST • SIMPLE • QUALITY
+                </div>
+
+                <h1>
+                    Download
+                    <span>Anything.</span>
+                </h1>
+
+                <p class="hero-description">
+                    Paste a supported media link and choose
+                    video or audio.
+                </p>
+
+            </section>
+
+
+            <!-- =================================================
+                 DOWNLOADER
+            ================================================== -->
+
+            <section class="downloader-card">
+
+                <div class="input-group">
+
+                    <label for="media-url">
+                        Media URL
+                    </label>
+
+                    <div class="url-input-wrapper">
+
+                        <input
+                            id="media-url"
+                            type="url"
+                            inputmode="url"
+                            autocomplete="off"
+                            placeholder="Paste your video link here..."
+                            aria-label="Media URL"
+                        >
+
+                        <button
+                            id="clear-url"
+                            class="clear-button"
+                            type="button"
+                            aria-label="Clear URL"
+                            hidden
+                        >
+                            ×
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <button
+                    id="get-media-button"
+                    class="primary-button"
+                    type="button"
+                >
+                    <span class="button-text">
+                        Get Media
+                    </span>
+
+                    <span
+                        class="button-loader"
+                        aria-hidden="true"
+                        hidden
+                    ></span>
+                </button>
+
+
+                <!-- ERROR -->
+
+                <div
+                    id="error-message"
+                    class="message error-message"
+                    role="alert"
+                    hidden
+                ></div>
+
+
+                <!-- =================================================
+                     MEDIA RESULT
+                ================================================== -->
+
+                <div
+                    id="media-result"
+                    class="media-result"
+                    hidden
+                >
+
+                    <div class="thumbnail-wrapper">
+
+                        <img
+                            id="media-thumbnail"
+                            src=""
+                            alt="Media thumbnail"
+                        >
+
+                    </div>
+
+
+                    <div class="media-details">
+
+                        <h2 id="media-title">
+                            Media title
+                        </h2>
+
+                        <p id="media-uploader"></p>
+
+                        <p id="media-duration"></p>
+
+                    </div>
+
+
+                    <!-- DOWNLOAD OPTIONS -->
+
+                    <div class="download-options">
+
+                        <div class="option-group">
+
+                            <label for="download-type">
+                                Download
+                            </label>
+
+                            <select id="download-type">
+
+                                <option value="video">
+                                    Video + Audio
+                                </option>
+
+                                <option value="audio">
+                                    Audio Only
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+                        <div class="option-group">
+
+                            <label for="quality">
+                                Quality
+                            </label>
+
+                            <select id="quality">
+
+                                <option value="best">
+                                    Best Available
+                                </option>
+
+                                <option value="1080">
+                                    Up to 1080p
+                                </option>
+
+                                <option value="720">
+                                    Up to 720p
+                                </option>
+
+                                <option value="480">
+                                    Up to 480p
+                                </option>
+
+                            </select>
+
+                        </div>
+
+                    </div>
+
+
+                    <button
+                        id="download-button"
+                        class="download-button"
+                        type="button"
+                    >
+                        <span class="button-text">
+                            Download
+                        </span>
+
+                        <span
+                            class="button-loader"
+                            aria-hidden="true"
+                            hidden
+                        ></span>
+                    </button>
+
+                </div>
+
+            </section>
+
+
+            <!-- =================================================
+                 SUPPORTED PLATFORMS
+            ================================================== -->
+
+            <section class="platforms-section">
+
+                <p class="section-label">
+                    SUPPORTED PLATFORMS
+                </p>
+
+                <div class="platform-list">
+
+                    <span>TikTok</span>
+                    <span>YouTube</span>
+                    <span>Instagram</span>
+                    <span>Facebook</span>
+                    <span>More</span>
+
+                </div>
+
+            </section>
+
+        </main>
+
+
+        <!-- =================================================
+             FOOTER
+        ================================================== -->
+
+        <footer class="site-footer">
+
+            <p>
+                © 2026 J TEC Downloader
+            </p>
+
+            <p>
+                Download content you have permission to save.
+            </p>
+
+        </footer>
+
     </div>
 
-    <div id="status" class="status-msg"></div>
 
-    <!-- Video Preview Card -->
-    <div id="previewCard">
-      <img id="thumbImg" src="" alt="Thumbnail">
-      <div id="videoTitle" class="meta-title"></div>
-      <div id="videoUploader" class="meta-uploader"></div>
-      <button id="downloadBtn" onclick="handleDownload()">Download Media</button>
-    </div>
-  </div>
+    <!-- =====================================================
+         JAVASCRIPT
+    ====================================================== -->
 
-  <script>
-    // Point this to your backend domain (http://localhost:8000 when running locally)
-    const API_BASE_URL = "http://localhost:8000/api/v1";
+    <script src="./js/config.js"></script>
+    <script src="./js/app.js"></script>
 
-    let currentUrl = "";
-
-    async function handleFetchInfo() {
-      const urlInput = document.getElementById("videoUrl");
-      const status = document.getElementById("status");
-      const previewCard = document.getElementById("previewCard");
-      const fetchBtn = document.getElementById("fetchBtn");
-
-      currentUrl = urlInput.value.trim();
-      if (!currentUrl) {
-        status.innerText = "Please paste a valid URL first.";
-        status.className = "status-msg error";
-        return;
-      }
-
-      status.className = "status-msg";
-      status.innerText = "Extracting video info...";
-      fetchBtn.disabled = true;
-      previewCard.style.display = "none";
-
-      try {
-        const response = await fetch(`${API_BASE_URL}/info`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ url: currentUrl })
-        });
-
-        if (!response.ok) throw new Error("Could not fetch metadata");
-
-        const data = await response.json();
-        
-        document.getElementById("thumbImg").src = data.thumbnail || "https://via.placeholder.com/400x220?text=No+Thumbnail";
-        document.getElementById("videoTitle").innerText = data.title || "Video Stream";
-        document.getElementById("videoUploader").innerText = `Platform: ${data.platform || 'Unknown'} | Uploader: ${data.uploader || 'N/A'}`;
-        
-        previewCard.style.display = "block";
-        status.innerText = "";
-      } catch (err) {
-        status.innerText = "Failed to fetch video details. Ensure the link is public.";
-        status.className = "status-msg error";
-      } finally {
-        fetchBtn.disabled = false;
-      }
-    }
-
-    async function handleDownload() {
-      const status = document.getElementById("status");
-      const downloadBtn = document.getElementById("downloadBtn");
-
-      status.className = "status-msg";
-      status.innerText = "Processing & downloading media... (this may take a moment)";
-      downloadBtn.disabled = true;
-
-      try {
-        const response = await fetch(`${API_BASE_URL}/download`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ url: currentUrl })
-        });
-
-        if (!response.ok) throw new Error("Download failed");
-
-        // Convert blob response into browser file download trigger
-        const blob = await response.blob();
-        const downloadUrl = window.URL.createObjectURL(blob);
-        const a = document.createElement("a");
-        a.href = downloadUrl;
-        
-        // Extract filename from header or fallback
-        const contentDisposition = response.headers.get("Content-Disposition");
-        let fileName = "video.mp4";
-        if (contentDisposition && contentDisposition.includes("filename=")) {
-          fileName = contentDisposition.split("filename=")[1].replace(/"/g, "");
-        }
-        
-        a.download = fileName;
-        document.body.appendChild(a);
-        a.click();
-        a.remove();
-        window.URL.revokeObjectURL(downloadUrl);
-
-        status.innerText = "Download complete!";
-      } catch (err) {
-        status.innerText = "Error downloading video. Try again.";
-        status.className = "status-msg error";
-      } finally {
-        downloadBtn.disabled = false;
-      }
-    }
-  </script>
 </body>
-  </html>
-  
+</html>
