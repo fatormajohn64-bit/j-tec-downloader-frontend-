@@ -1,0 +1,591 @@
+/* =========================================================
+   J TEC DOWNLOADER
+   Main stylesheet
+   ========================================================= */
+
+:root {
+    --bg: #050505;
+    --surface: #0d0d0d;
+    --surface-light: #151515;
+    --border: #242424;
+
+    --text: #ffffff;
+    --muted: #969696;
+
+    --accent: #f5c542;
+    --accent-hover: #ffd866;
+
+    --danger: #ff5c5c;
+
+    --radius: 18px;
+    --max-width: 620px;
+
+    --transition: 180ms ease;
+}
+
+
+/* =========================================================
+   RESET
+   ========================================================= */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    min-height: 100%;
+    background: var(--bg);
+    color-scheme: dark;
+}
+
+body {
+    min-height: 100vh;
+    background:
+        radial-gradient(
+            circle at 50% 0%,
+            rgba(245, 197, 66, 0.08),
+            transparent 35%
+        ),
+        var(--bg);
+
+    color: var(--text);
+
+    font-family:
+        Inter,
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+
+    -webkit-font-smoothing: antialiased;
+}
+
+button,
+input,
+select {
+    font: inherit;
+}
+
+button {
+    cursor: pointer;
+}
+
+img {
+    display: block;
+    max-width: 100%;
+}
+
+
+/* =========================================================
+   APP
+   ========================================================= */
+
+#app {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+.site-header {
+    width: 100%;
+    padding: 22px 18px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+
+    display: flex;
+    justify-content: center;
+}
+
+.brand {
+    color: var(--text);
+    text-decoration: none;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    line-height: 1;
+}
+
+.brand-main {
+    font-size: 1.5rem;
+    font-weight: 900;
+    letter-spacing: 0.16em;
+}
+
+.brand-sub {
+    margin-top: 5px;
+
+    color: var(--accent);
+
+    font-size: 0.55rem;
+    font-weight: 800;
+    letter-spacing: 0.3em;
+}
+
+
+/* =========================================================
+   MAIN
+   ========================================================= */
+
+.main-content {
+    width: 100%;
+    max-width: var(--max-width);
+
+    margin: 0 auto;
+
+    padding:
+        42px 18px
+        50px;
+}
+
+
+/* =========================================================
+   HERO
+   ========================================================= */
+
+.hero-section {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.hero-badge {
+    display: inline-flex;
+
+    padding: 7px 12px;
+
+    border: 1px solid rgba(245, 197, 66, 0.25);
+    border-radius: 999px;
+
+    color: var(--accent);
+
+    font-size: 0.65rem;
+    font-weight: 800;
+    letter-spacing: 0.16em;
+}
+
+.hero-section h1 {
+    margin-top: 18px;
+
+    font-size: clamp(2.2rem, 11vw, 4rem);
+    line-height: 0.98;
+
+    font-weight: 900;
+    letter-spacing: -0.05em;
+}
+
+.hero-section h1 span {
+    color: var(--accent);
+}
+
+.hero-description {
+    max-width: 440px;
+
+    margin: 16px auto 0;
+
+    color: var(--muted);
+
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+
+/* =========================================================
+   DOWNLOADER CARD
+   ========================================================= */
+
+.downloader-card {
+    padding: 18px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255, 255, 255, 0.045),
+            rgba(255, 255, 255, 0.015)
+        );
+
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+
+    box-shadow:
+        0 20px 60px rgba(0, 0, 0, 0.35);
+}
+
+
+/* =========================================================
+   INPUT
+   ========================================================= */
+
+.input-group label,
+.option-group label {
+    display: block;
+
+    margin-bottom: 8px;
+
+    color: #d7d7d7;
+
+    font-size: 0.78rem;
+    font-weight: 700;
+}
+
+.url-input-wrapper {
+    position: relative;
+}
+
+#media-url {
+    width: 100%;
+    min-height: 54px;
+
+    padding: 0 46px 0 15px;
+
+    color: var(--text);
+    background: #080808;
+
+    border: 1px solid var(--border);
+    border-radius: 13px;
+
+    outline: none;
+
+    transition:
+        border-color var(--transition),
+        box-shadow var(--transition);
+}
+
+#media-url::placeholder {
+    color: #656565;
+}
+
+#media-url:focus {
+    border-color: rgba(245, 197, 66, 0.65);
+
+    box-shadow:
+        0 0 0 3px rgba(245, 197, 66, 0.08);
+}
+
+.clear-button {
+    position: absolute;
+
+    top: 50%;
+    right: 10px;
+
+    width: 32px;
+    height: 32px;
+
+    transform: translateY(-50%);
+
+    border: 0;
+    border-radius: 50%;
+
+    color: #aaa;
+    background: #191919;
+
+    font-size: 1.2rem;
+}
+
+.clear-button:hover {
+    color: white;
+}
+
+
+/* =========================================================
+   BUTTONS
+   ========================================================= */
+
+.primary-button,
+.download-button {
+    width: 100%;
+    min-height: 54px;
+
+    margin-top: 14px;
+
+    border: 0;
+    border-radius: 13px;
+
+    font-weight: 800;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 10px;
+
+    transition:
+        transform var(--transition),
+        background var(--transition),
+        opacity var(--transition);
+}
+
+.primary-button {
+    color: #050505;
+    background: var(--accent);
+}
+
+.primary-button:hover {
+    background: var(--accent-hover);
+}
+
+.download-button {
+    color: #050505;
+    background: var(--accent);
+}
+
+.download-button:hover {
+    background: var(--accent-hover);
+}
+
+.primary-button:active,
+.download-button:active {
+    transform: scale(0.985);
+}
+
+.primary-button:disabled,
+.download-button:disabled {
+    cursor: not-allowed;
+    opacity: 0.55;
+}
+
+
+/* =========================================================
+   LOADER
+   ========================================================= */
+
+.button-loader {
+    width: 18px;
+    height: 18px;
+
+    border: 2px solid rgba(0, 0, 0, 0.25);
+    border-top-color: #050505;
+
+    border-radius: 50%;
+
+    animation: spin 700ms linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+
+/* =========================================================
+   MESSAGES
+   ========================================================= */
+
+.message {
+    margin-top: 14px;
+
+    padding: 12px 14px;
+
+    border-radius: 12px;
+
+    font-size: 0.82rem;
+    line-height: 1.5;
+}
+
+.error-message {
+    color: #ffb1b1;
+    background: rgba(255, 92, 92, 0.08);
+    border: 1px solid rgba(255, 92, 92, 0.2);
+}
+
+
+/* =========================================================
+   MEDIA RESULT
+   ========================================================= */
+
+.media-result {
+    margin-top: 20px;
+
+    padding-top: 20px;
+
+    border-top: 1px solid var(--border);
+}
+
+.thumbnail-wrapper {
+    overflow: hidden;
+
+    background: #080808;
+
+    border-radius: 14px;
+
+    aspect-ratio: 16 / 9;
+}
+
+.thumbnail-wrapper img {
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+}
+
+.media-details {
+    padding: 15px 2px 0;
+}
+
+.media-details h2 {
+    font-size: 1rem;
+    line-height: 1.4;
+}
+
+.media-details p {
+    margin-top: 5px;
+
+    color: var(--muted);
+
+    font-size: 0.78rem;
+}
+
+
+/* =========================================================
+   DOWNLOAD OPTIONS
+   ========================================================= */
+
+.download-options {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 13px;
+
+    margin-top: 20px;
+}
+
+.option-group select {
+    width: 100%;
+    min-height: 50px;
+
+    padding: 0 13px;
+
+    color: var(--text);
+    background: #080808;
+
+    border: 1px solid var(--border);
+    border-radius: 12px;
+
+    outline: none;
+}
+
+.option-group select:focus {
+    border-color: rgba(245, 197, 66, 0.6);
+}
+
+
+/* =========================================================
+   PLATFORMS
+   ========================================================= */
+
+.platforms-section {
+    margin-top: 36px;
+
+    text-align: center;
+}
+
+.section-label {
+    color: #777;
+
+    font-size: 0.62rem;
+    font-weight: 800;
+    letter-spacing: 0.2em;
+}
+
+.platform-list {
+    margin-top: 13px;
+
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.platform-list span {
+    padding: 8px 11px;
+
+    color: #aaa;
+
+    background: rgba(255, 255, 255, 0.035);
+
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 999px;
+
+    font-size: 0.7rem;
+}
+
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+
+.site-footer {
+    margin-top: auto;
+
+    padding:
+        24px 18px
+        30px;
+
+    text-align: center;
+
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.site-footer p {
+    color: #606060;
+
+    font-size: 0.68rem;
+    line-height: 1.6;
+}
+
+.site-footer p + p {
+    margin-top: 4px;
+}
+
+
+/* =========================================================
+   TABLET / DESKTOP
+   ========================================================= */
+
+@media (min-width: 600px) {
+
+    .site-header {
+        justify-content: flex-start;
+        padding-left: 30px;
+    }
+
+    .brand {
+        align-items: flex-start;
+    }
+
+    .main-content {
+        padding-top: 70px;
+    }
+
+    .download-options {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .downloader-card {
+        padding: 24px;
+    }
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
