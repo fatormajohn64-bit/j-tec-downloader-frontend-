@@ -9,6 +9,7 @@ const JTEC = {
 
     state: {
         mediaInfo: null,
+        lastUrl: "",
         loadingInfo: false,
         downloading: false,
         currentJobId: null,
@@ -22,8 +23,6 @@ const JTEC = {
         this.createProgressUI();
         this.bindEvents();
         this.applyBranding();
-        this.bindNavEvents();
-        this.loadDefaults();
     },
 
     cacheElements() {
@@ -39,27 +38,15 @@ const JTEC = {
         this.elements.duration = document.getElementById("media-duration");
         this.elements.type = document.getElementById("download-type");
         this.elements.quality = document.getElementById("quality");
+        this.elements.favoriteButton = document.getElementById("favorite-button");
 
         // Branding
         this.elements.brandMain = document.getElementById("brand-main");
         this.elements.brandSub = document.getElementById("brand-sub");
         this.elements.footerVersion = document.getElementById("footer-version");
-
-        // Nav drawer
-        this.elements.menuToggle = document.getElementById("menu-toggle");
-        this.elements.navDrawer = document.getElementById("nav-drawer");
-        this.elements.navOverlay = document.getElementById("nav-overlay");
-        this.elements.navClose = document.getElementById("nav-close");
-        this.elements.drawerVersion = document.getElementById("drawer-version");
-
-        // Settings drawer
-        this.elements.settingsToggle = document.getElementById("settings-toggle");
-        this.elements.settingsDrawer = document.getElementById("settings-drawer");
-        this.elements.settingsOverlay = document.getElementById("settings-overlay");
-        this.elements.settingsClose = document.getElementById("settings-close");
-        this.elements.defaultType = document.getElementById("default-type");
-        this.elements.defaultQuality = document.getElementById("default-quality");
-        this.elements.settingsAbout = document.getElementById("settings-about");
+        this.elements.sideAvatar = document.getElementById("side-avatar");
+        this.elements.sideBrandName = document.getElementById("side-brand-name");
+        this.elements.sideBrandTagline = document.getElementById("side-brand-tagline");
     },
 
     bindEvents() {
@@ -72,144 +59,36 @@ const JTEC = {
 
     /* -----------------------------------------------------
        BRANDING
-       Pulls APP_NAME / APP_VERSION from config.js so changing
-       CONFIG updates the header, drawer, and footer automatically.
+       Pulls APP_NAME / APP_VERSION / APP_TAGLINE from
+       config.js, so editing CONFIG updates the header,
+       sidebar, and footer automatically.
     ----------------------------------------------------- */
 
     applyBranding() {
         const name = CONFIG.APP_NAME || "J TEC Downloader";
         const version = CONFIG.APP_VERSION || "";
+        const tagline = CONFIG.APP_TAGLINE || "";
 
-        // Last word becomes the small subtitle (e.g. "J TEC" / "DOWNLOADER"),
-        // everything before it stays as the main brand text.
         const words = name.trim().split(/\s+/);
         const sub = words.length > 1 ? words.pop() : "";
         const main = words.join(" ") || name;
 
         document.title = name;
 
-        if (this.elements.brandMain) {
-            this.elements.brandMain.textContent = main;
-        }
-
-        if (this.elements.brandSub) {
-            this.elements.brandSub.textContent = sub.toUpperCase();
-        }
-
-        if (this.elements.drawerVersion) {
-            this.elements.drawerVersion.textContent = version ? `v${version}` : "";
-        }
+        if (this.elements.brandMain) this.elements.brandMain.textContent = main;
+        if (this.elements.brandSub) this.elements.brandSub.textContent = sub.toUpperCase();
 
         if (this.elements.footerVersion) {
             this.elements.footerVersion.textContent =
                 version ? `${name} v${version}` : name;
         }
 
-        if (this.elements.settingsAbout) {
-            this.elements.settingsAbout.textContent =
-                version ? `${name} \u2014 v${version}` : name;
-        }
-    },
-
-    /* -----------------------------------------------------
-       NAV + SETTINGS DRAWERS
-    ----------------------------------------------------- */
-
-    bindNavEvents() {
-        const {
-            menuToggle, navDrawer, navOverlay, navClose,
-            settingsToggle, settingsDrawer, settingsOverlay, settingsClose,
-            defaultType, defaultQuality
-        } = this.elements;
-
-        const openNav = () => {
-            if (!navDrawer) return;
-            navDrawer.classList.add("open");
-            navOverlay.classList.add("visible");
-            navDrawer.setAttribute("aria-hidden", "false");
-        };
-
-        const closeNav = () => {
-            if (!navDrawer) return;
-            navDrawer.classList.remove("open");
-            navOverlay.classList.remove("visible");
-            navDrawer.setAttribute("aria-hidden", "true");
-        };
-
-        const openSettings = () => {
-            if (!settingsDrawer) return;
-            settingsDrawer.classList.add("open");
-            settingsOverlay.classList.add("visible");
-            settingsDrawer.setAttribute("aria-hidden", "false");
-        };
-
-        const closeSettings = () => {
-            if (!settingsDrawer) return;
-            settingsDrawer.classList.remove("open");
-            settingsOverlay.classList.remove("visible");
-            settingsDrawer.setAttribute("aria-hidden", "true");
-        };
-
-        menuToggle?.addEventListener("click", openNav);
-        navClose?.addEventListener("click", closeNav);
-        navOverlay?.addEventListener("click", closeNav);
-
-        settingsToggle?.addEventListener("click", () => {
-            closeNav();
-            openSettings();
-        });
-        settingsClose?.addEventListener("click", closeSettings);
-        settingsOverlay?.addEventListener("click", closeSettings);
-
-        document.addEventListener("keydown", (event) => {
-            if (event.key === "Escape") {
-                closeNav();
-                closeSettings();
-            }
-        });
-
-        defaultType?.addEventListener("change", () => this.saveDefaults());
-        defaultQuality?.addEventListener("change", () => this.saveDefaults());
-    },
-
-    /* -----------------------------------------------------
-       DEFAULT TYPE / QUALITY
-       Stored locally so the settings drawer's picks pre-fill
-       the real download-type / quality selects on the result card.
-    ----------------------------------------------------- */
-
-    loadDefaults() {
-        let saved = {};
-
-        try {
-            saved = JSON.parse(localStorage.getItem("jtec_defaults") || "{}");
-        } catch {
-            saved = {};
+        if (this.elements.sideAvatar) {
+            this.elements.sideAvatar.textContent = name.trim().charAt(0).toUpperCase() || "J";
         }
 
-        if (saved.type) {
-            if (this.elements.defaultType) this.elements.defaultType.value = saved.type;
-            if (this.elements.type) this.elements.type.value = saved.type;
-        }
-
-        if (saved.quality) {
-            if (this.elements.defaultQuality) this.elements.defaultQuality.value = saved.quality;
-            if (this.elements.quality) this.elements.quality.value = saved.quality;
-        }
-
-        this.handleTypeChange();
-    },
-
-    saveDefaults() {
-        const type = this.elements.defaultType?.value;
-        const quality = this.elements.defaultQuality?.value;
-
-        localStorage.setItem("jtec_defaults", JSON.stringify({ type, quality }));
-
-        if (this.elements.type) this.elements.type.value = type;
-        if (this.elements.quality) this.elements.quality.value = quality;
-
-        this.handleTypeChange();
+        if (this.elements.sideBrandName) this.elements.sideBrandName.textContent = name;
+        if (this.elements.sideBrandTagline) this.elements.sideBrandTagline.textContent = tagline;
     },
 
     handleUrlInput() {
@@ -246,6 +125,7 @@ const JTEC = {
         }
 
         this.state.loadingInfo = true;
+        this.state.lastUrl = url;
         this.setButtonLoading(this.elements.getMedia, true);
         this.elements.result.hidden = true;
         this.hideProgress();
@@ -306,6 +186,11 @@ const JTEC = {
             behavior: "smooth",
             block: "nearest"
         });
+
+        // Let panel.js record this in local Downloads history and
+        // sync the Favorites button, if it has loaded.
+        window.JTecPanel?.saveHistory?.(this.state.lastUrl, media);
+        window.JTecPanel?.refreshFavoriteButton?.(this.state.lastUrl, media);
     },
 
     async download() {
@@ -380,6 +265,13 @@ const JTEC = {
             this.showError(this.getFriendlyError(error));
             this.setDownloadState("error");
             this.updateProgressStatus("Download failed");
+
+            // "Resume Interrupted Downloads" setting: retry once
+            // automatically instead of leaving the user stuck.
+            if (window.JTecPanel?.shouldAutoRetry?.()) {
+                window.JTecPanel.notify("Retrying your download...");
+                setTimeout(() => this.download(), 1500);
+            }
 
         } finally {
             this.state.downloading = false;
@@ -480,6 +372,8 @@ const JTEC = {
         this.elements.progressEta.textContent = "Ready";
 
         this.setDownloadState("complete");
+
+        window.JTecPanel?.notifyDownloadComplete?.(this.elements.title.textContent);
 
         await this.delay(350);
 
