@@ -21,6 +21,9 @@ const JTEC = {
         this.cacheElements();
         this.createProgressUI();
         this.bindEvents();
+        this.applyBranding();
+        this.bindNavEvents();
+        this.loadDefaults();
     },
 
     cacheElements() {
@@ -36,6 +39,27 @@ const JTEC = {
         this.elements.duration = document.getElementById("media-duration");
         this.elements.type = document.getElementById("download-type");
         this.elements.quality = document.getElementById("quality");
+
+        // Branding
+        this.elements.brandMain = document.getElementById("brand-main");
+        this.elements.brandSub = document.getElementById("brand-sub");
+        this.elements.footerVersion = document.getElementById("footer-version");
+
+        // Nav drawer
+        this.elements.menuToggle = document.getElementById("menu-toggle");
+        this.elements.navDrawer = document.getElementById("nav-drawer");
+        this.elements.navOverlay = document.getElementById("nav-overlay");
+        this.elements.navClose = document.getElementById("nav-close");
+        this.elements.drawerVersion = document.getElementById("drawer-version");
+
+        // Settings drawer
+        this.elements.settingsToggle = document.getElementById("settings-toggle");
+        this.elements.settingsDrawer = document.getElementById("settings-drawer");
+        this.elements.settingsOverlay = document.getElementById("settings-overlay");
+        this.elements.settingsClose = document.getElementById("settings-close");
+        this.elements.defaultType = document.getElementById("default-type");
+        this.elements.defaultQuality = document.getElementById("default-quality");
+        this.elements.settingsAbout = document.getElementById("settings-about");
     },
 
     bindEvents() {
@@ -44,6 +68,148 @@ const JTEC = {
         this.elements.getMedia.addEventListener("click", () => this.getMedia());
         this.elements.download.addEventListener("click", () => this.download());
         this.elements.type.addEventListener("change", () => this.handleTypeChange());
+    },
+
+    /* -----------------------------------------------------
+       BRANDING
+       Pulls APP_NAME / APP_VERSION from config.js so changing
+       CONFIG updates the header, drawer, and footer automatically.
+    ----------------------------------------------------- */
+
+    applyBranding() {
+        const name = CONFIG.APP_NAME || "J TEC Downloader";
+        const version = CONFIG.APP_VERSION || "";
+
+        // Last word becomes the small subtitle (e.g. "J TEC" / "DOWNLOADER"),
+        // everything before it stays as the main brand text.
+        const words = name.trim().split(/\s+/);
+        const sub = words.length > 1 ? words.pop() : "";
+        const main = words.join(" ") || name;
+
+        document.title = name;
+
+        if (this.elements.brandMain) {
+            this.elements.brandMain.textContent = main;
+        }
+
+        if (this.elements.brandSub) {
+            this.elements.brandSub.textContent = sub.toUpperCase();
+        }
+
+        if (this.elements.drawerVersion) {
+            this.elements.drawerVersion.textContent = version ? `v${version}` : "";
+        }
+
+        if (this.elements.footerVersion) {
+            this.elements.footerVersion.textContent =
+                version ? `${name} v${version}` : name;
+        }
+
+        if (this.elements.settingsAbout) {
+            this.elements.settingsAbout.textContent =
+                version ? `${name} \u2014 v${version}` : name;
+        }
+    },
+
+    /* -----------------------------------------------------
+       NAV + SETTINGS DRAWERS
+    ----------------------------------------------------- */
+
+    bindNavEvents() {
+        const {
+            menuToggle, navDrawer, navOverlay, navClose,
+            settingsToggle, settingsDrawer, settingsOverlay, settingsClose,
+            defaultType, defaultQuality
+        } = this.elements;
+
+        const openNav = () => {
+            if (!navDrawer) return;
+            navDrawer.classList.add("open");
+            navOverlay.classList.add("visible");
+            navDrawer.setAttribute("aria-hidden", "false");
+        };
+
+        const closeNav = () => {
+            if (!navDrawer) return;
+            navDrawer.classList.remove("open");
+            navOverlay.classList.remove("visible");
+            navDrawer.setAttribute("aria-hidden", "true");
+        };
+
+        const openSettings = () => {
+            if (!settingsDrawer) return;
+            settingsDrawer.classList.add("open");
+            settingsOverlay.classList.add("visible");
+            settingsDrawer.setAttribute("aria-hidden", "false");
+        };
+
+        const closeSettings = () => {
+            if (!settingsDrawer) return;
+            settingsDrawer.classList.remove("open");
+            settingsOverlay.classList.remove("visible");
+            settingsDrawer.setAttribute("aria-hidden", "true");
+        };
+
+        menuToggle?.addEventListener("click", openNav);
+        navClose?.addEventListener("click", closeNav);
+        navOverlay?.addEventListener("click", closeNav);
+
+        settingsToggle?.addEventListener("click", () => {
+            closeNav();
+            openSettings();
+        });
+        settingsClose?.addEventListener("click", closeSettings);
+        settingsOverlay?.addEventListener("click", closeSettings);
+
+        document.addEventListener("keydown", (event) => {
+            if (event.key === "Escape") {
+                closeNav();
+                closeSettings();
+            }
+        });
+
+        defaultType?.addEventListener("change", () => this.saveDefaults());
+        defaultQuality?.addEventListener("change", () => this.saveDefaults());
+    },
+
+    /* -----------------------------------------------------
+       DEFAULT TYPE / QUALITY
+       Stored locally so the settings drawer's picks pre-fill
+       the real download-type / quality selects on the result card.
+    ----------------------------------------------------- */
+
+    loadDefaults() {
+        let saved = {};
+
+        try {
+            saved = JSON.parse(localStorage.getItem("jtec_defaults") || "{}");
+        } catch {
+            saved = {};
+        }
+
+        if (saved.type) {
+            if (this.elements.defaultType) this.elements.defaultType.value = saved.type;
+            if (this.elements.type) this.elements.type.value = saved.type;
+        }
+
+        if (saved.quality) {
+            if (this.elements.defaultQuality) this.elements.defaultQuality.value = saved.quality;
+            if (this.elements.quality) this.elements.quality.value = saved.quality;
+        }
+
+        this.handleTypeChange();
+    },
+
+    saveDefaults() {
+        const type = this.elements.defaultType?.value;
+        const quality = this.elements.defaultQuality?.value;
+
+        localStorage.setItem("jtec_defaults", JSON.stringify({ type, quality }));
+
+        if (this.elements.type) this.elements.type.value = type;
+        if (this.elements.quality) this.elements.quality.value = quality;
+
+        this.handleTypeChange();
     },
 
     handleUrlInput() {
@@ -309,7 +475,7 @@ const JTEC = {
 
     async completeDownload(jobId) {
         this.setProgress(100);
-        this.updateProgressStatus("Download complete ✓");
+        this.updateProgressStatus("Download complete \u2713");
         this.elements.progressSpeed.textContent = "Complete";
         this.elements.progressEta.textContent = "Ready";
 
@@ -494,7 +660,7 @@ const JTEC = {
             case "complete":
                 button.disabled = false;
                 text.hidden = false;
-                text.textContent = "Download Complete ✓";
+                text.textContent = "Download Complete \u2713";
                 if (loader) loader.hidden = true;
 
                 setTimeout(() => {
