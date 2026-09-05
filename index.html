@@ -31,55 +31,96 @@
 
     <div id="app">
 
-        <!-- NAV OVERLAY (shared dimmer for drawer + settings) -->
-        <div class="scrim" id="nav-overlay"></div>
-        <div class="scrim" id="settings-overlay"></div>
+        <!-- SCRIMS -->
+        <div class="scrim" id="side-overlay"></div>
+        <div class="scrim" id="panel-overlay"></div>
 
-        <!-- NAV DRAWER -->
-        <aside class="drawer" id="nav-drawer" aria-hidden="true">
-            <div class="drawer-header">
-                <span class="drawer-title">Menu</span>
-                <button id="nav-close" class="icon-btn" type="button" aria-label="Close menu">&times;</button>
+        <!-- =================================================
+             SIDEBAR
+        ================================================== -->
+
+        <aside class="side-drawer" id="side-drawer" aria-hidden="true">
+
+            <div class="side-drawer-top">
+                <div class="side-avatar" id="side-avatar">J</div>
+                <div>
+                    <p class="side-brand-name" id="side-brand-name">J TEC Downloader</p>
+                    <p class="side-brand-tagline" id="side-brand-tagline">Fast &bull; Simple &bull; Quality</p>
+                </div>
+                <button id="side-close" class="icon-btn side-close" type="button" aria-label="Close menu">&times;</button>
             </div>
 
-            <nav class="drawer-nav">
-                <a href="#top">Home</a>
-                <a href="#platforms">Supported Platforms</a>
-                <a href="#about">About</a>
+            <nav class="side-menu">
+                <p class="side-menu-label">Menu</p>
+
+                <a href="#top" class="side-link" data-action="home">
+                    <span class="side-icon">&#127968;</span>
+                    <span>Home</span>
+                </a>
+
+                <a href="#" class="side-link" data-panel="downloads">
+                    <span class="side-icon">&#8681;</span>
+                    <span>Downloads</span>
+                    <em class="side-count" id="downloads-count" hidden>0</em>
+                </a>
+
+                <a href="#" class="side-link" data-panel="favorites">
+                    <span class="side-icon">&#9825;</span>
+                    <span>Favorites</span>
+                    <em class="side-count" id="favorites-count" hidden>0</em>
+                </a>
+
+                <a href="#" class="side-link" data-panel="platforms">
+                    <span class="side-icon">&#127760;</span>
+                    <span>Supported Sites</span>
+                </a>
+
+                <a href="#" class="side-link" data-panel="how-to-use">
+                    <span class="side-icon">&#10067;</span>
+                    <span>How to Use</span>
+                </a>
             </nav>
 
-            <p class="drawer-version" id="drawer-version"></p>
+            <nav class="side-menu">
+                <p class="side-menu-label">Tools</p>
+
+                <a href="#" class="side-link" data-action="video-to-mp3">
+                    <span class="side-icon">&#127925;</span>
+                    <span>Video to MP3</span>
+                </a>
+            </nav>
+
+            <nav class="side-menu side-menu-bottom">
+                <a href="#" class="side-link" data-panel="settings">
+                    <span class="side-icon">&#9881;</span>
+                    <span>Settings</span>
+                </a>
+
+                <div class="side-link side-toggle-row">
+                    <span class="side-icon">&#127769;</span>
+                    <span>Dark Mode</span>
+                    <label class="toggle">
+                        <input type="checkbox" id="dark-mode-toggle" checked>
+                        <span class="toggle-track"><span class="toggle-thumb"></span></span>
+                    </label>
+                </div>
+            </nav>
+
         </aside>
 
-        <!-- SETTINGS DRAWER -->
-        <aside class="drawer drawer-right" id="settings-drawer" aria-hidden="true">
-            <div class="drawer-header">
-                <span class="drawer-title">Settings</span>
-                <button id="settings-close" class="icon-btn" type="button" aria-label="Close settings">&times;</button>
+
+        <!-- =================================================
+             PAGE PANEL (Downloads / Favorites / Sites /
+             How to Use / Settings all render here)
+        ================================================== -->
+
+        <aside class="page-panel" id="page-panel" aria-hidden="true">
+            <div class="page-panel-header">
+                <button id="panel-close" class="icon-btn" type="button" aria-label="Close">&times;</button>
+                <h2 id="panel-title">Settings</h2>
+                <span class="page-panel-spacer"></span>
             </div>
-
-            <div class="settings-body">
-
-                <div class="settings-row">
-                    <label for="default-type">Default download type</label>
-                    <select id="default-type">
-                        <option value="video">Video + Audio</option>
-                        <option value="audio">Audio Only</option>
-                    </select>
-                </div>
-
-                <div class="settings-row">
-                    <label for="default-quality">Default quality</label>
-                    <select id="default-quality">
-                        <option value="best">Best Available</option>
-                        <option value="1080">Up to 1080p</option>
-                        <option value="720">Up to 720p</option>
-                        <option value="480">Up to 480p</option>
-                    </select>
-                </div>
-
-                <p class="settings-about" id="settings-about"></p>
-            </div>
+            <div class="page-panel-body" id="panel-body"></div>
         </aside>
 
 
@@ -123,16 +164,16 @@
 
             <section class="hero-section">
 
-                <div class="hero-badge">
+                <div class="hero-badge" data-i18n="badge">
                     FAST &bull; SIMPLE &bull; QUALITY
                 </div>
 
                 <h1>
-                    Download
-                    <span>Anything.</span>
+                    <span data-i18n="heroLine1">Download</span>
+                    <span data-i18n="heroLine2">Anything.</span>
                 </h1>
 
-                <p class="hero-description">
+                <p class="hero-description" data-i18n="heroDescription">
                     Paste a supported media link and choose
                     video or audio.
                 </p>
@@ -157,7 +198,7 @@
 
                 <div class="input-group">
 
-                    <label for="media-url">
+                    <label for="media-url" data-i18n="mediaUrlLabel">
                         Media URL
                     </label>
 
@@ -169,6 +210,7 @@
                             inputmode="url"
                             autocomplete="off"
                             placeholder="Paste your video link here..."
+                            data-i18n-placeholder="mediaUrlPlaceholder"
                             aria-label="Media URL"
                         >
 
@@ -192,7 +234,7 @@
                     class="primary-button"
                     type="button"
                 >
-                    <span class="button-text">
+                    <span class="button-text" data-i18n="getMedia">
                         Get Media
                     </span>
 
@@ -203,7 +245,7 @@
                     ></span>
                 </button>
 
-                <p class="url-hint">We'll fetch the best quality for you. &#10024;</p>
+                <p class="url-hint" data-i18n="urlHint">We'll fetch the best quality for you. &#10024;</p>
 
 
                 <!-- ERROR -->
@@ -226,7 +268,7 @@
                     hidden
                 >
 
-                    <div class="thumbnail-wrapper">
+                    <div class="thumbnail-wrapper" id="thumbnail-wrapper">
 
                         <img
                             id="media-thumbnail"
@@ -311,7 +353,7 @@
                         class="download-button"
                         type="button"
                     >
-                        <span class="button-text">
+                        <span class="button-text" data-i18n="download">
                             Download
                         </span>
 
@@ -320,6 +362,16 @@
                             aria-hidden="true"
                             hidden
                         ></span>
+                    </button>
+
+                    <button
+                        id="favorite-button"
+                        class="favorite-button"
+                        type="button"
+                        aria-pressed="false"
+                    >
+                        <span class="favorite-icon">&#9825;</span>
+                        <span class="favorite-text">Save to Favorites</span>
                     </button>
 
                 </div>
@@ -334,23 +386,33 @@
             <section class="features-section">
                 <div class="feature">
                     <div class="feature-icon">&#9889;</div>
-                    <h3>Super Fast</h3>
-                    <p>Lightning speed downloads.</p>
+                    <h3 data-i18n="featSpeedTitle">Super Fast</h3>
+                    <p data-i18n="featSpeedDesc">Lightning speed downloads.</p>
                 </div>
                 <div class="feature">
-                    <div class="feature-icon">&#128737;</div>
-                    <h3>Secure</h3>
-                    <p>100% safe and private.</p>
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 2 4 5v6c0 5 3.4 9 8 11 4.6-2 8-6 8-11V5z"></path>
+                            <path d="M9 12l2 2 4-4"></path>
+                        </svg>
+                    </div>
+                    <h3 data-i18n="featSecureTitle">Secure</h3>
+                    <p data-i18n="featSecureDesc">100% safe and private.</p>
                 </div>
                 <div class="feature">
-                    <div class="feature-icon">&#127942;</div>
-                    <h3>High Quality</h3>
-                    <p>Best quality guaranteed.</p>
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="9" r="6"></circle>
+                            <path d="M9 14.5 7 22l5-3 5 3-2-7.5"></path>
+                        </svg>
+                    </div>
+                    <h3 data-i18n="featQualityTitle">High Quality</h3>
+                    <p data-i18n="featQualityDesc">Best quality guaranteed.</p>
                 </div>
                 <div class="feature">
                     <div class="feature-icon">&#128578;</div>
-                    <h3>Easy to Use</h3>
-                    <p>Simple interface, powerful results.</p>
+                    <h3 data-i18n="featEasyTitle">Easy to Use</h3>
+                    <p data-i18n="featEasyDesc">Simple interface, powerful results.</p>
                 </div>
             </section>
 
@@ -361,7 +423,7 @@
 
             <section class="platforms-section" id="platforms">
 
-                <p class="section-label">
+                <p class="section-label" data-i18n="platformsLabel">
                     &#127760; SUPPORTED PLATFORMS
                 </p>
 
@@ -385,7 +447,7 @@
                     </div>
                     <div class="platform-item">
                         <span class="platform-icon bubble-more">&#8230;</span>
-                        <span>More</span>
+                        <span data-i18n="more">More</span>
                     </div>
 
                 </div>
@@ -400,8 +462,8 @@
             <section class="promo-banner">
                 <span class="promo-icon">&#128081;</span>
                 <div class="promo-copy">
-                    <p class="promo-title">Your All-in-One Downloader</p>
-                    <p class="promo-sub">One link. Unlimited possibilities.</p>
+                    <p class="promo-title" data-i18n="promoTitle">Your All-in-One Downloader</p>
+                    <p class="promo-sub" data-i18n="promoSub">One link. Unlimited possibilities.</p>
                 </div>
                 <span class="promo-arrow">&#8594;</span>
             </section>
@@ -413,11 +475,11 @@
              FOOTER
         ================================================== -->
 
-        <footer class="site-footer" id="about">
+        <footer class="site-footer">
 
             <p id="footer-version"></p>
 
-            <p>
+            <p data-i18n="footerDisclaimer">
                 Download content you have permission to save.
             </p>
 
@@ -431,7 +493,9 @@
     ====================================================== -->
 
     <script src="./js/config.js"></script>
+    <script src="./js/i18n.js"></script>
     <script src="./js/app.js"></script>
+    <script src="./js/panel.js"></script>
 
 </body>
 </html>
