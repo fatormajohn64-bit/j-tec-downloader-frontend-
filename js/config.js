@@ -15,6 +15,12 @@ const CONFIG = Object.freeze({
 
     APP_VERSION: "1.0.0",
 
+    APP_TAGLINE: "Fast \u2022 Simple \u2022 Quality",
+
+    // TODO: replace with a real inbox you check, used by the
+    // "Send Feedback" button in Settings > About.
+    SUPPORT_EMAIL: "support@example.com",
+
 
     /* -----------------------------------------------------
        BACKEND
