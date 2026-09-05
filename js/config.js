@@ -19,7 +19,7 @@ const CONFIG = Object.freeze({
 
     // TODO: replace with a real inbox you check, used by the
     // "Send Feedback" button in Settings > About.
-    SUPPORT_EMAIL: "support@example.com",
+    SUPPORT_EMAIL: "fatormajohn911@gmail.com",
 
 
     /* -----------------------------------------------------
