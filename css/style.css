@@ -296,6 +296,11 @@ img {
     font-weight: 800;
 }
 
+.platform-bubble svg {
+    width: 22px;
+    height: 22px;
+}
+
 .bubble-tiktok    { background: #101010; top: 0; left: 46%; }
 .bubble-youtube   { background: #e2262c; top: 38%; left: 4px; }
 .bubble-instagram { background: linear-gradient(135deg, #f58529, #dd2a7b, #8134af); bottom: 6px; left: 22%; }
@@ -695,6 +700,11 @@ img {
     color: #fff;
     font-size: 0.82rem;
     font-weight: 800;
+}
+
+.platform-icon svg {
+    width: 24px;
+    height: 24px;
 }
 
 .bubble-more {
