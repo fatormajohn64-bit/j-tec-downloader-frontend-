@@ -301,10 +301,16 @@ img {
     height: 22px;
 }
 
-.bubble-tiktok    { background: #101010; top: 0; left: 46%; }
-.bubble-youtube   { background: #e2262c; top: 38%; left: 4px; }
-.bubble-instagram { background: linear-gradient(135deg, #f58529, #dd2a7b, #8134af); bottom: 6px; left: 22%; }
-.bubble-facebook  { background: #1877f2; bottom: 26%; right: 4px; }
+.platform-bubble {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.bubble-tiktok    { background: #101010; top: 32px; left: 50%; }
+.bubble-youtube   { background: #e2262c; top: 95px; left: calc(50% - 95px); }
+.bubble-instagram { background: linear-gradient(135deg, #f58529, #dd2a7b, #8134af); top: 138px; left: calc(50% - 68px); }
+.bubble-facebook  { background: #1877f2; top: 148px; left: calc(50% + 78px); }
 
 
 /* =========================================================
