@@ -38,6 +38,13 @@ html {
     min-height: 100%;
     background: var(--bg);
     color-scheme: dark;
+
+    /* Stops mobile browsers from auto-inflating font sizes,
+       which was causing text to grow and overlap other
+       elements unpredictably ("zooming"). */
+    -webkit-text-size-adjust: 100%;
+    -moz-text-size-adjust: 100%;
+    text-size-adjust: 100%;
 }
 
 body {
@@ -238,8 +245,8 @@ img {
 .hero-art {
     position: relative;
 
-    height: 190px;
-    margin-top: 26px;
+    height: 140px;
+    margin-top: 22px;
 
     display: flex;
     align-items: center;
@@ -278,39 +285,10 @@ img {
     box-shadow: 0 0 40px rgba(245, 197, 66, 0.2);
 }
 
-.platform-bubble {
-    position: absolute;
-
-    width: 40px;
-    height: 40px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    border-radius: 50%;
-    border: 2px solid var(--bg);
-
-    color: #fff;
-    font-size: 0.8rem;
-    font-weight: 800;
-}
-
-.platform-bubble svg {
-    width: 22px;
-    height: 22px;
-}
-
-.platform-bubble {
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
-
-.bubble-tiktok    { background: #101010; top: 32px; left: 50%; }
-.bubble-youtube   { background: #e2262c; top: 95px; left: calc(50% - 95px); }
-.bubble-instagram { background: linear-gradient(135deg, #f58529, #dd2a7b, #8134af); top: 138px; left: calc(50% - 68px); }
-.bubble-facebook  { background: #1877f2; top: 148px; left: calc(50% + 78px); }
+.bubble-tiktok    { background: #101010; }
+.bubble-youtube   { background: #e2262c; }
+.bubble-instagram { background: linear-gradient(135deg, #f58529, #dd2a7b, #8134af); }
+.bubble-facebook  { background: #1877f2; }
 
 
 /* =========================================================
