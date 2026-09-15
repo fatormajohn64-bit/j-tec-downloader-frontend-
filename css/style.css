@@ -346,7 +346,7 @@ img {
     width: 100%;
     min-height: 54px;
 
-    padding: 0 46px 0 15px;
+    padding: 0 82px 0 15px;
 
     color: var(--text);
     background: #080808;
@@ -370,6 +370,34 @@ img {
 
     box-shadow:
         0 0 0 3px rgba(245, 197, 66, 0.08);
+}
+
+.paste-button {
+    position: absolute;
+
+    top: 50%;
+    right: 10px;
+
+    height: 32px;
+    padding: 0 14px;
+
+    transform: translateY(-50%);
+
+    border: 1px solid var(--accent);
+    border-radius: 999px;
+
+    color: var(--accent);
+    background: transparent;
+
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.03em;
+}
+
+/* Swap Paste for Clear automatically once there's text --
+   they occupy the same spot so they never overlap. */
+#media-url:not(:placeholder-shown) ~ .paste-button {
+    display: none;
 }
 
 .clear-button {
