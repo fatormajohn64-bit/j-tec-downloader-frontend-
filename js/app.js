@@ -586,12 +586,13 @@ const JTEC = {
     },
 
     handleTypeChange() {
-        const isAudio =
-            this.elements.type.value === "audio";
+        const value = this.elements.type.value;
+        const qualityDoesNotApply =
+            value === "audio" || value === "image";
 
-        this.elements.quality.disabled = isAudio;
+        this.elements.quality.disabled = qualityDoesNotApply;
 
-        if (isAudio) {
+        if (qualityDoesNotApply) {
             this.elements.quality.value = "best";
         }
     },
